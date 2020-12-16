@@ -1,4 +1,4 @@
 <?php
 return [
-    'debug' => true, //调试模式
+    'debug' => false, //调试模式
 ];
