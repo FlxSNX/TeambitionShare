@@ -1,7 +1,7 @@
 # TeambitionShare  
 挂载Teambition项目中的文件 直链分享  
-PHP版本推荐 >= 5.6
-[演示站点](http://tbfile.ouoacg.com)
+PHP版本推荐 >= 5.6  
+演示站点:[tbfile.ouoacg.com](http://tbfile.ouoacg.com)
 ## 如何使用
 先去 www.teambition.com 注册登录  
 然后去项目 创建一个项目  
