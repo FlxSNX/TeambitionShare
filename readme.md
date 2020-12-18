@@ -1,8 +1,9 @@
-# TeambitionShare  
+# TeambitionShare
 挂载Teambition项目中的文件 直链分享  
 PHP版本推荐 >= 5.6  
 伪静态规则分别在.htaccess 和 nginx 文件中  
-演示站点:[tbfile.ouoacg.com](http://tbfile.ouoacg.com)
+演示站点:[tbfile.ouoacg.com](http://tbfile.ouoacg.com)  
+Teambition网盘的挂载正在开发中...
 ## 一些问题
 1.Cookie有效期  
 目前我自己的Cookie使用了1个多月未失效,猜测只要你不在官网手动退出登录就不会失效  
