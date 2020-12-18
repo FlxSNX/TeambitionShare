@@ -151,8 +151,8 @@ class teambition{
     public static function get_download_url($parentId,$cookie){
         $result = self::get('https://www.teambition.com/api/works/'.$parentId,$cookie);
         if($result){
-            $resultArray = json_decode($result,true);
-            if($resultArray['downloadUrl']){
+            $result = json_decode($result,true);
+            if($result['downloadUrl']){
                 return $result;
             }else{
                 return false;
@@ -179,6 +179,7 @@ class teambition{
             curl_setopt($ch, CURLOPT_POSTFIELDS,$post);
             curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         }
+        curl_setopt($ch, CURLOPT_TIMEOUT,10);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);

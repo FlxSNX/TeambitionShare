@@ -12,7 +12,7 @@ class index{
 
     public function index($url,$dirid=false){
         $project = teambition::get_project($this->projectId,$this->cookie);
-        if($project){
+        if($project && $project['_id']){
             if(!$dirid){
                 $dirid = $project['_rootCollectionId'];
                 $root = true;
@@ -42,7 +42,6 @@ class index{
         $type = authstr($_GET['type']) ?: 302;
         $result = teambition::get_download_url($id,$this->cookie);
         if($result){
-            $result = json_decode($result,true);
             if($result['fileType'] == 'mp4' and $_SERVER['HTTP_RANGE'] == NULL){
                 assign('item',$result);
                 view('index/_play');
