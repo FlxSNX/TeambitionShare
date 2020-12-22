@@ -23,7 +23,7 @@
 		<?php
 			foreach($dirlist as $dir){
 		?>
-		<a href="<?=$CFG['url']?>/<?=$dir['_id']?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
+		<a href="<?=$_CFG['url']?>/<?=$dir['_id']?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
 			<div class="mdui-row">
 				<div class="mdui-col-xs-7 mdui-text-truncate">
 					<i class="mdui-icon material-icons mdui-m-r-1">folder</i> <?=$dir['title']?>
@@ -36,7 +36,7 @@
 		<?php
 			foreach($filelist as $file){
 		?>
-		<a target="__blank" href="<?=$CFG['url']?>/download/<?=$file['_id']?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
+		<a target="__blank" href="<?=$_CFG['url']?>/download/<?=$file['_id']?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
 			<div class="mdui-row">
 				<div class="mdui-col-xs-7 mdui-text-truncate">
 					<i class="mdui-icon material-icons mdui-m-r-1">insert_drive_file</i> <?=$file['fileName']?>
