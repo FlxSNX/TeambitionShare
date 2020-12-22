@@ -1,7 +1,8 @@
 <?php
 /**
- * Teambition项目文件类
+ * Teambition操作类
  * @author FlxSNX<211154860@qq.com>
+ * @version 1.1
  */
 
 namespace extend;
@@ -163,13 +164,167 @@ class teambition{
     }
 
     /**
+     * 获取挂载网盘的相关配置
+     * @param string $cookie teambitionCookie
+     * @return array
+     */
+    public static function get_pan_config($cookie){
+        $config = [];
+        $org = self::get_orgId($cookie);
+        if($org){
+            $config['orgId'] = $org['_id'];
+            $config['memberId'] = $org['_creatorId'];
+            $space = self::get_spaceId($cookie,$config['orgId'],$config['memberId']);
+            if($space){
+                $config['spaceId'] = $space[0]['spaceId'];
+                $config['rootId'] = $space[0]['rootId'];
+                $drive = self::get_driveId($cookie,$config['orgId']);
+                if($drive){
+                    $config['driveId'] = $drive['data']['driveId'];
+                    return $config;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 获取网盘文件列表
+     * @param string $cookie teambitionCookie
+     * @param string $orgId
+     * @param string $spaceId
+     * @param int $driveId
+     * @param string $parentId
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public static function get_pan_list($cookie,$orgId,$spaceId,$driveId,$parentId,$limit=100,$offset=0){
+        $api = 'https://pan.teambition.com/pan/api/nodes?';
+        $param = [
+            'orgId' => $orgId,
+            'spaceId' => $spaceId,
+            'driveId' => $driveId,
+            'parentId' => $parentId,
+            'offset' => $offset,
+            'limit' => $limit,
+            'orderBy' => 'updateTime',
+            'orderDirection' => 'desc'
+        ];
+        $result = self::get($api.http_build_query($param),$cookie);
+        if($result){
+            $result = json_decode($result,true);
+            return $result;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 获取网盘文件信息
+     * @param string $cookie teambitionCookie
+     * @param string $orgId
+     * @param string $spaceId
+     * @param int $driveId
+     * @param string $parentId
+     * @return array
+     */
+    public static function get_pan_file($cookie,$orgId,$spaceId,$driveId,$parentId){
+        $api = 'https://pan.teambition.com/pan/api/nodes/'.$parentId.'?';
+        $param = [
+            'orgId' => $orgId,
+            'spaceId' => $spaceId,
+            'driveId' => $driveId,
+        ];
+        $result = self::get($api.http_build_query($param),$cookie);
+        if($result){
+            $result = json_decode($result,true);
+            return $result;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 获取网盘的orgId&memberId
+     * @param string $cookie teambitionCookie
+     * @return array
+     */
+    public static function get_orgId($cookie){
+        $api = 'https://www.teambition.com/api/organizations/personal';
+        $result = self::get($api,$cookie);
+        if($result){
+            $result = json_decode($result,true);
+            if($result['_id'] && $result['_creatorId']){
+                return $result;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 获取网盘的spaceId&根rootId
+     * @param string $cookie teambitionCookie
+     * @param string $orgId
+     * @param string $memberId
+     * @return array
+     */
+    public static function get_spaceId($cookie,$orgId,$memberId){
+        $api = 'https://pan.teambition.com/pan/api/spaces?';
+        $param = [
+            'orgId' => $orgId,
+            'memberId' => $memberId
+        ];
+        $result = self::get($api.http_build_query($param),$cookie);
+        if($result){
+            $result = json_decode($result,true);
+            if($result[0]['spaceId'] && $result[0]['rootId']){
+                return $result;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 获取网盘的driveId
+     * @param string $cookie teambitionCookie
+     * @param string $orgId
+     * @return array
+     */
+    public static function get_driveId($cookie,$orgId){
+        $api = 'https://pan.teambition.com/pan/api/orgs/'.$orgId;
+        $result = self::get($api,$cookie);
+        if($result){
+            $result = json_decode($result,true);
+            if($result['data']['driveId']){
+                return $result;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
      * Curl Json Post & Get
      * @param string $url 请求地址
      * @param string $cookie 请求携带Cookie
      * @param int $post 是否为POST
      * @param int $header 是否返回header
      */
-    protected static function get($url,$cookie=false,$post=false,$header=false){
+    public static function get($url,$cookie=false,$post=false,$header=false){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_HEADER,$header);

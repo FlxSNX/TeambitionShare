@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta name="theme-color" content="#ffffff">
+	<title>配置向导</title>
+	<link href="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.1/css/mdui.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?=APPURL?>/assets/index.css">
+</head>
+<style>
+	.mdui-container{
+		padding: 24px 8px 62px;
+	}
+
+	.mdui-dialog{
+		border-radius: 0;
+	}
+	
+	.loading{
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,.7);
+		z-index: 99999;
+		text-align: center;
+	}
+
+	.loading>.mdui-spinner{
+		position: absolute;
+		top:50%;
+		margin-top: -25px;
+		width: 50px;
+		height: 50px;
+	}
+
+	.loading>.mdui-spinner>.mdui-spinner-layer{
+		border-color: #fff;
+	}
+
+	.loading>.mdui-spinner .mdui-spinner-circle{
+		border-width: 4px;
+	}
+
+	.header{
+		background-color: #fff;
+		height: 60px;
+		line-height: 60px;
+		box-shadow: 0 1px 6px 0 rgba(32,33,36,.28);
+	}
+</style>
+<body>
+<div class="loading" id="loading"><div class="mdui-spinner"></div></div>
+<div class="header">
+	<div class="mdui-container mdui-p-x-3 mdui-p-y-0">
+		<div class="mdui-typo-title">配置向导</div>
+	</div>
+</div>
+<div class="mdui-container">
+    <div class="mdui-row">
+        <div class="mdui-col-md-8 mdui-col-offset-md-2">
+            <div class="mdui-textfield">
+                <label class="mdui-textfield-label">网站标题</label>
+                <input class="mdui-textfield-input" id="title" type="text" value="TeambitionShare"/>
+            </div>
+            <div class="mdui-textfield">
+                <label class="mdui-textfield-label">网站地址</label>
+                <input class="mdui-textfield-input" id="url" type="text" value="<?=APPURL?>"/>
+                <div class="mdui-textfield-helper">如果放在二级目录,请填写对应地址 例如http://xxx.com/pan</div>
+            </div>
+            <div class="mdui-textfield">
+                <label class="mdui-textfield-label">挂载类型</label>
+                <div class="mdui-row-md-3 mdui-p-x-1">
+                    <div class="mdui-col">
+                        <label class="mdui-radio">
+                            <input type="radio" name="type" value="pan"/>
+                            <i class="mdui-radio-icon"></i>
+                            Teambition网盘
+                        </label>
+                    </div>
+                    <div class="mdui-col">
+                        <label class="mdui-radio">
+                            <input type="radio" name="type" value="project" checked />
+                            <i class="mdui-radio-icon"></i>
+                            Teambition项目文件
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="mdui-textfield" id="prject">
+                <label class="mdui-textfield-label">项目ID</label>
+                <input class="mdui-textfield-input" id="projectId" type="text"/>
+            </div>
+            <div class="mdui-textfield">
+                <label class="mdui-textfield-label">账号Cookie</label>
+                <textarea class="mdui-textfield-input" rows="6" id="cookie" placeholder="Cookie"></textarea>
+            </div>
+            <button class="mdui-btn mdui-btn-raised mdui-color-pink" id="ok">确认配置</button>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.1/js/mdui.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+    $(':radio[name=type]').change(function(){
+        if($(this).val() == 'pan'){
+            $('#prject').hide();
+        }else{
+            $('#prject').show();
+        }
+    });
+
+    $('#ok').click(function(){
+        var title = $('#title').val(),
+        url = $('#url').val(),
+        type = $(':radio[name=type]:checked').val(),
+        cookie = $('#cookie').val();
+
+        if(!title || !url || !type || !cookie){
+            return mdui.alert('信息未填写完整');
+        }else{
+            var postdata = {
+                title:title,
+                url:url,
+                type:type,
+                cookie:cookie
+            };
+        }
+
+        if(type == 'project'){
+            var projectId = $('#projectId').val();
+            if(!projectId)return mdui.alert('未填写projectId');
+            postdata.projectId = projectId;
+        }
+        $('#loading').fadeToggle();
+        $.ajax({
+            type:"POST",
+            url:window.location.pathname,
+            data:postdata,
+            dataType:'json',
+            success:function(data){
+                $('#loading').fadeToggle();
+                if(data.code == 200){
+                    window.location.href = url;
+                }else{
+                    mdui.alert(data.msg);
+                }
+            },
+            error:function(){
+                $('#loading').fadeToggle();
+                mdui.alert('系统繁忙');
+            }
+        })
+    });
+</script>
+</body>
+</html>

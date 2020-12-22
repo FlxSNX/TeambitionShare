@@ -132,9 +132,10 @@ class Flx{
                      $run_action = $this->_SYS['action'];
                      $run = new $run_class_name;
                      if(method_exists($run,$run_action)) {//检查是否存在对应的方法
-                         //检查是否存在__init方法 用于防止子类重写父类的__construct方法
-                         if(method_exists($run,'__init'))$run->__init();
-                         $run->$run_action(...$val);
+                        //检查是否存在__init方法 用于防止子类重写父类的__construct方法
+                        if(method_exists($run,'__init'))$run->__init();
+                        $run->$run_action(...$val);
+                        break;
                      }else{
                         sys_error([
                             'error' => $this->_SYS['controller'].'控制器缺少'.$this->_SYS['action'].'方法',
@@ -160,9 +161,10 @@ class Flx{
                      $run_action = $this->_SYS['action'];
                      $run = new $run_class_name;
                      if(method_exists($run,$run_action)) {//检查是否存在对应的方法
-                         //检查是否存在__init方法 用于防止子类重写父类的__construct方法
-                         if(method_exists($run,'__init'))$run->__init();
-                         $run->$run_action($route['param']);
+                        //检查是否存在__init方法 用于防止子类重写父类的__construct方法
+                        if(method_exists($run,'__init'))$run->__init();
+                        $run->$run_action($route['param']);
+                        break;
                      }else{
                         sys_error([
                             'error' => $this->_SYS['controller'].'控制器缺少'.$this->_SYS['action'].'方法',
