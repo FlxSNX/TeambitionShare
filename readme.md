@@ -18,12 +18,12 @@ PHP版本推荐 >= 5.6
 4.二级目录运行  
 放在二级目录运行,配置的时候填入对应的URL和修改伪静态规则即可  
 ## 如何使用
-1.1版本无需再到config/app.cfg.php中填写配置  
+1.1版本无需再到`config/app.cfg.php`中填写配置  
 在未配置的情况下访问网站会跳转到配置向导页面,在页面填写Cookie和项目ID即可自动生成配置文件  
    
 先去 www.teambition.com 注册登录  
 然后去项目 创建一个项目  
 ![image](https://ae01.alicdn.com/kf/U78fa30b3f30b47de96af1449808e153cV.jpg)  
-然后获取Cookie和项目ID 填到config/app.cfg.php中  
+然后获取Cookie和项目ID 填到`config/app.cfg.php`中  
 ![image](https://ae01.alicdn.com/kf/U6ac816255ae44212a0b10f8d56b8cc01k.jpg)  
 ![image](https://ae01.alicdn.com/kf/Ube8a1476632a48c59f760d19fec97f79F.jpg)  
