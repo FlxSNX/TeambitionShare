@@ -29,4 +29,9 @@ PHP版本推荐 >= 5.6
 ![image](https://ae01.alicdn.com/kf/Ube8a1476632a48c59f760d19fec97f79F.jpg) 
 
 ## Docker
+
+```
+docker pull malaohu/teambitionshare
+docker run -d -p 8081:80 malaohu/teambitionshare:latest
+```
  
