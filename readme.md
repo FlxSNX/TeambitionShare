@@ -33,5 +33,7 @@ PHP版本推荐 >= 5.6
 ```
 docker pull malaohu/teambitionshare
 docker run -d -p 8081:80 malaohu/teambitionshare:latest
+
+# 访问: http://ip:8081
 ```
  
