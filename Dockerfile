@@ -1,3 +1,9 @@
-FROM php:5.6.30-apache
-COPY . /var/www/html/
-EXPOSE 8080
+FROM php:7.0-apache
+
+RUN apt-get update && \
+    apt-get clean
+
+RUN a2enmod rewrite
+
+COPY ./ /var/www/html/
+
