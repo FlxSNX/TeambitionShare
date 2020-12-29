@@ -1,7 +1,8 @@
 # TeambitionShare
 挂载Teambition文件 直链分享  
 已支持Teambition网盘(需申请)与Teambition项目  
-PHP版本推荐 >= 5.6  
+PHP版本要求 ≥ 5.6  
+PHP版本推荐 ≥ 7.0  
 伪静态规则分别在.htaccess 和 nginx 文件中  
 项目挂载演示站点:[tbfile.ouoacg.com](http://tbfile.ouoacg.com)  
 网盘挂载演示站点:[tbfile.ouoacg.com/pan](http://tbfile.ouoacg.com/pan)  
