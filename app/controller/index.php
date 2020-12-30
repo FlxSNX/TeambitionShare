@@ -164,7 +164,8 @@ class index{
                             'fileid' => $id,
                             'filename' => $result['fileName'],
                             'filetype' => $result['fileType'],
-                            'downloadUrl' => $result['downloadUrl']
+                            'downloadUrl' => $result['downloadUrl'],
+                            'title' => $this->_CFG['title']
                         ]);
                         view('index/_preview');
                     }else{
@@ -196,7 +197,8 @@ class index{
                             'fileid' => $id,
                             'filename' => $result['name'],
                             'filetype' => $result['ext'],
-                            'downloadUrl' => $result['downloadUrl']
+                            'downloadUrl' => $result['downloadUrl'],
+                            'title' => $this->_CFG['title']
                         ]);
                         view('index/_preview');
                     }else{
