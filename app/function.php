@@ -18,6 +18,7 @@ function getSize($filesize) {
 }
 
 function getFileicon($type){
+	$type = strtolower($type);
 	if($type == 'mp4'){
 		return 'play_circle_filled';
 	}elseif(in_array($type,["gif","jpeg","jpg","png"])){
@@ -30,6 +31,7 @@ function getFileicon($type){
 }
 
 function isPreview($type){
+	$type = strtolower($type);
 	if($type == 'mp4' || in_array($type,["gif","jpeg","jpg","png"]) || in_array($type,["mp3","ogg","wav"])){
 		return '?preview';
 	}else{

@@ -3,6 +3,7 @@
     <div class="mdui-typo-subheading mdui-m-b-1"><i class="mdui-icon material-icons mdui-m-r-1"><?=getFileicon($filetype)?></i><?=$filename?></div>
     <div class="mdui-divider mdui-m-b-2"></div>
 <?php
+$filetype = strtolower($filetype);
 if($filetype == 'mp4'){
 ?>
 <script src="https://cdn.bootcdn.net/ajax/libs/dplayer/1.26.0/DPlayer.min.js"></script>
