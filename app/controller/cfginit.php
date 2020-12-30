@@ -6,7 +6,7 @@ class cfginit{
         global $Flx;
         $this->_CFG = $Flx->_CFG;
         if(!$this->_CFG['teambition'] && !$this->_CFG['pan']){
-            if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtoupper($_SERVER['HTTP_X_REQUESTED_WITH'])=='XMLHTTPREQUEST'){
+            if(is_ajax()){
                 $type = authstr($_POST['type']) ?: NULL;
                 $title = authstr($_POST['title']) ?: NULL;
                 $url = authstr($_POST['url']) ?: NULL;
@@ -20,7 +20,14 @@ class cfginit{
 return [
     'type' => '$type',
     'url' => '$url',
-    'pan' => ['cookie' => '$cookie','orgId' => '$result[orgId]','spaceId' => '$result[spaceId]','driveId' => '$result[driveId]','rootId' => '$result[rootId]'],
+    'pan' => [
+        'cookie' => '$cookie',
+        'orgId' => '$result[orgId]',
+        'spaceId' => '$result[spaceId]',
+        'driveId' => '$result[driveId]',
+        'rootId' => '$result[rootId]',
+        'maxCount' => 1000
+    ],
     'title' => '$title'
 ];
 TEXT;
@@ -44,7 +51,11 @@ TEXT;
 return [
     'type' => '$type',
     'url' => '$url',
-    'teambition' => ['cookie' => '$cookie','projectId' => '$projectId'],
+    'teambition' => [
+        'cookie' => '$cookie',
+        'projectId' => '$projectId',
+        'maxCount' => 1000
+    ],
     'title' => '$title'
 ];
 TEXT;

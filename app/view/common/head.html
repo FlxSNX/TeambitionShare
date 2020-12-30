@@ -7,7 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<meta name="theme-color" content="#ffffff">
-	<title><?=$_CFG['title']?></title>
+	<link rel="shortcut icon" href="<?=$_CFG['url']?>/favicon.ico">
+	<title><?=$title?></title>
 	<link href="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.1/css/mdui.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="<?=APPURL?>/assets/index.css">
 </head>
@@ -54,11 +55,67 @@
 		line-height: 60px;
 		box-shadow: 0 1px 6px 0 rgba(32,33,36,.28);
 	}
+
+	.mdui-typo-title{
+		color: #262626;
+		font-weight: 300;
+		font-size: 20px;
+	}
+
+	.mdui-typo-title>i{
+		font-size: 36px;
+		color: #1b9aee;
+	}
+
+	.filelist i.mdui-icon,.mdui-typo-subheading i.mdui-icon{
+		color: #1b9aee;
+	}
+
+	.mdui-theme-layout-dark{
+		background-color: #252525;
+	}
+
+	.header{
+    	background-color: #f4f4f4;
+	}
+
+	.mdui-theme-layout-dark .header{
+		color: #fff;
+    	background-color: #303030;
+	}
+
+	.mdui-theme-layout-dark .mdui-typo-title{
+		color: #fff;
+	}
+
+	.right-icon{
+		color: #555;
+	}
+
+	.mdui-theme-layout-dark .right-icon{
+		color: #fff;
+	}
+
+	.right-icon .mdui-btn-icon{
+		width: 48px;
+		height: 48px;
+	}
+
+	.bottom-text a{
+		color: #000;
+	}
+
+	.mdui-theme-layout-dark .bottom-text a{
+		color: #fff;
+	}
 </style>
 <body>
 <div class="loading" id="loading"><div class="mdui-spinner"></div></div>
-<div class="header">
-	<div class="mdui-container mdui-p-x-3 mdui-p-y-0">
-		<div class="mdui-typo-title"><?=$_CFG['title']?></div>
+<div class="header mdui-shadow-0">
+	<div class="mdui-p-x-2 mdui-p-y-0 mdui-center mdui-col-md-8" style="float: none;">
+		<span class="mdui-typo-title"><i class="mdui-icon material-icons">cloud_circle</i> <?=$title?></span>
+		<div class="right-icon mdui-float-right">
+			<button class="mdui-btn mdui-btn-icon" id="theme-toggle"><i class="mdui-icon material-icons">brightness_4</i></button>
+		</div>
 	</div>
 </div>

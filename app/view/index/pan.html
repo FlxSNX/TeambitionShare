@@ -19,7 +19,7 @@
 		</div>
 
 	</div>
-    <div class="mdui-list">
+    <div class="mdui-list filelist">
     <?php
         foreach($panlist['data'] as $item){
             if($item['kind'] == 'folder'){
@@ -35,10 +35,10 @@
             }else{
 
     ?>
-        <a target="__blank" href="<?=$_CFG['url']?>/download/<?=$item['nodeId']?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
+        <a target="__blank" href="<?=$_CFG['url']?>/download/<?=$item['nodeId']?><?=isPreview($item['ext'])?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
             <div class="mdui-row">
                 <div class="mdui-col-xs-7 mdui-text-truncate">
-                    <i class="mdui-icon material-icons mdui-m-r-1">insert_drive_file</i> <?=$item['name']?>
+                    <i class="mdui-icon material-icons mdui-m-r-1"><?=getFileicon($item['ext'])?></i> <?=$item['name']?>
                 </div>
                 <div class="mdui-col-xs-5 mdui-text-right">
                     <?=getSize($item['size'])?>
@@ -51,6 +51,6 @@
     ?>
     </div>
 	<div class="mdui-divider"></div>
-	<div class="mdui-typo-body-1 mdui-text-center mdui-m-t-2">Template by MDUI | Powered by <a style="text-decoration: none;" href="https://github.com/FlxSNX/TeambitionShare">FlxSNX</a></div>
+	<div class="bottom-text mdui-typo-body-1 mdui-text-center mdui-m-t-2">TeambitionShare v1.12 | Powered by <a href="https://github.com/FlxSNX/TeambitionShare">FlxSNX</a></div>
 </div>
 <?php include template('common/foot') ?>

@@ -1,0 +1,31 @@
+<?php include template('common/head') ?>
+<div class="mdui-container">
+    <div class="mdui-typo-subheading mdui-m-b-1"><i class="mdui-icon material-icons mdui-m-r-1"><?=getFileicon($filetype)?></i><?=$filename?></div>
+    <div class="mdui-divider mdui-m-b-2"></div>
+<?php
+if($filetype == 'mp4'){
+?>
+<script src="https://cdn.bootcdn.net/ajax/libs/dplayer/1.26.0/DPlayer.min.js"></script>
+    <div id="player"></div>
+<script>
+    const dp = new DPlayer({
+    container: document.getElementById('player'),
+        video: {
+            url: "<?=$downloadUrl?>",
+        },
+    });
+</script>
+<?php
+}elseif(in_array($filetype,["gif","jpeg","jpg","png"])){
+?>
+    <img class="mdui-center" src="<?=$downloadUrl?>" style="max-width: 100%;">
+<?php
+}elseif(in_array($filetype,["mp3","ogg","wav"])){
+?>
+    <audio class="mdui-center" src="<?=$downloadUrl?>" controls autoplay></audio>
+<?php
+}
+?>
+    <a href="<?=$_CFG['url']?>/download/<?=$fileid?>" class="mdui-btn mdui-btn-block mdui-ripple mdui-m-t-2" style="background-color: #1b9aee;color: #fff;"><i class="mdui-icon material-icons" style="font-size: 1.3em;">get_app</i>下载</a>
+</div>
+<?php include template('common/foot') ?>

@@ -19,9 +19,10 @@
 		</div>
 
 	</div>
-	<div class="mdui-list">
+	<div class="mdui-list filelist">
 		<?php
 			foreach($dirlist as $dir){
+			if($dir['title']){
 		?>
 		<a href="<?=$_CFG['url']?>/<?=$dir['_id']?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
 			<div class="mdui-row">
@@ -31,15 +32,15 @@
 			</div>
 		</a>
 		<?php
-			}
+			}}
 		?>
 		<?php
 			foreach($filelist as $file){
 		?>
-		<a target="__blank" href="<?=$_CFG['url']?>/download/<?=$file['_id']?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
+		<a target="__blank" href="<?=$_CFG['url']?>/download/<?=$file['_id']?><?=isPreview($file['fileType'])?>" class="mdui-list-item mdui-ripple" style="width: 100%;display: block;line-height: 48px;">
 			<div class="mdui-row">
 				<div class="mdui-col-xs-7 mdui-text-truncate">
-					<i class="mdui-icon material-icons mdui-m-r-1">insert_drive_file</i> <?=$file['fileName']?>
+					<i class="mdui-icon material-icons mdui-m-r-1"><?=getFileicon($file['fileType'])?></i> <?=$file['fileName']?>
 				</div>
 				<div class="mdui-col-xs-5 mdui-text-right">
 					<?=getSize($file['fileSize'])?>
@@ -51,6 +52,6 @@
 		?>
 	</div>
 	<div class="mdui-divider"></div>
-	<div class="mdui-typo-body-1 mdui-text-center mdui-m-t-2">Template by MDUI | Powered by <a style="text-decoration: none;" href="https://github.com/FlxSNX/TeambitionShare">FlxSNX</a></div>
+	<div class="bottom-text mdui-typo-body-1 mdui-text-center mdui-m-t-2">TeambitionShare v1.12 | Powered by <a href="https://github.com/FlxSNX/TeambitionShare">FlxSNX</a></div>
 </div>
 <?php include template('common/foot') ?>
