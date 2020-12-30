@@ -3,6 +3,7 @@
 ## 说明
 已支持Teambition网盘(需申请)与Teambition项目  
 **希望各位修改页面底部信息时保留本项目的github链接！**  
+ps.如果升级到1.12 访问首页报错404 请删除 config/app.cfg.php 然后在配置向导中重新生成配置  
 PHP版本要求 ≥ 5.6  
 PHP版本推荐 ≥ 7.0  
 伪静态规则分别在.htaccess 和 nginx 文件中  
