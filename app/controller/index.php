@@ -25,6 +25,7 @@ class index{
                 }
             }
             if($_SESSION['password'] != $this->_CFG['password']){
+                assign(['title' => $this->_CFG['title']]);
                 view('password');
                 exit;
             }
