@@ -26,11 +26,11 @@ PHP版本推荐 ≥ 7.0
    
 先去 www.teambition.com 注册登录  
 Cookie获取:  
-F12 -> Network -> 然后刷新一下 找到如图所示的cookie  
+F12 -> Network -> 刷新一下 找到如图所示的cookie  
 ![image](https://ae01.alicdn.com/kf/U6ac816255ae44212a0b10f8d56b8cc01k.jpg)  
 
 项目ID(projectId)获取:  
-先创建一个项目,然后进入创建项目  
+先创建一个项目,然后进入创建的项目  
 ![image](https://ae01.alicdn.com/kf/U78fa30b3f30b47de96af1449808e153cV.jpg)  
 ![image](https://ae01.alicdn.com/kf/Ube8a1476632a48c59f760d19fec97f79F.jpg)  
 
