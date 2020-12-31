@@ -8,17 +8,17 @@
 PHP版本要求 ≥ 5.6  
 PHP版本推荐 ≥ 7.0   
 项目挂载演示站点:[tbfile.ouoacg.com](http://tbfile.ouoacg.com)  
-网盘挂载演示站点:[tbfile.ouoacg.com/pan](http://tbfile.ouoacg.com/pan)访问密码:123456  
+网盘挂载演示站点:[tbfile.ouoacg.com/pan](http://tbfile.ouoacg.com/pan) 访问密码:123456  
 ## 一些问题
 1.Cookie有效期  
-目前我自己的Cookie使用了1个多月未失效,猜测只要你不在官网手动退出登录就不会失效  
+目前未遇到cookie失效的情况,猜测只要你不在官网手动退出登录就不会失效  
 2.下载速度  
 下载速度有些不稳定,有时快有时慢(1MB/S);  
 3.访问密码  
-  ①)全局密码  
-    在config/app.cfg.php中添加 `'password' => '你要设置的密码'` 即可  
-  ②)目录密码  
-    在目录下上传一个文件`.password`,文件内容即为目录密码  
+①)全局密码  
+在config/app.cfg.php中添加 `'password' => '你要设置的密码'` 即可  
+②)目录密码  
+在目录下上传一个文件`.password`,文件内容即为目录密码  
 4.二级目录运行  
 放在二级目录运行,配置的时候填入对应的URL和[修改伪静态规则](#nginx伪静态规则)(Apache无需修改)即可  
 ## 如何使用
