@@ -1,5 +1,5 @@
 # TeambitionShare
-挂载Teambition文件 直链分享  
+挂载Teambition文件(网盘文件列表程序)  
 ## 说明
 已支持Teambition网盘(需申请)与Teambition项目  
 **希望各位修改页面底部信息时保留本项目的github链接！**  
@@ -13,10 +13,8 @@ PHP版本推荐 ≥ 7.0
 ## 一些问题
 1.Cookie有效期  
 目前我自己的Cookie使用了1个多月未失效,猜测只要你不在官网手动退出登录就不会失效  
-2.下载速度(Teambition项目)  
-开源前测试能跑到20MB/s,2020-12-17测试时速度下架到1MB/s左右  
-2020-12-18 测试能到10MB+/s 然后会下降到1MB/s  
-感觉下载速度有点不稳定  
+2.下载速度  
+下载速度有些不稳定,有时快有时慢(1MB/S);  
 3.访问密码  
   ①)全局密码  
     在config/app.cfg.php中添加 `'password' => '你要设置的密码'` 即可  
@@ -35,7 +33,9 @@ PHP版本推荐 ≥ 7.0
 ![image](https://ae01.alicdn.com/kf/U6ac816255ae44212a0b10f8d56b8cc01k.jpg)  
 ![image](https://ae01.alicdn.com/kf/Ube8a1476632a48c59f760d19fec97f79F.jpg) 
 
-## Nginx伪静态规则
+## 伪静态规则
+
+### Nginx
 ```
 #根目录伪静态
 location / {
@@ -49,6 +49,17 @@ location /pan {
     rewrite ^/pan/(.*)$ /pan/index.php/?s=$1;
   }
 }
+```
+
+### Apache
+```
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php/?s=$1 [QSA,PT,L]
+</IfModule>
 ```
 
 ## Docker
