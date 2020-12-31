@@ -1,0 +1,28 @@
+{
+  "name": "TeambitionShare",
+  "description": "挂载Teambition文件 可直链分享 支持网盘(需申请)和项目文件(无需内测邀请码)",
+  "repository": "https://github.com/projectteambition/TeambitionShare",
+  "keywords": ["TeambitionShare","Teambition"],
+  "env":{
+    "type":{
+      "description": "挂载类型(选填pan/project)",
+      "value": "pan→网盘/project→项目"
+    },
+    "url":{
+      "description": "网站主页",
+      "value": "https://你的应用名称.herokuapp.com/"
+    },
+    "cookie":{
+      "description": "网盘cookie(获取教程:https://github.com/FlxSNX/TeambitionShare/blob/master/readme.md)",
+      "value": ""
+    },
+    "projectId":{
+      "description": "项目ID(获取教程:https://github.com/FlxSNX/TeambitionShare/blob/master/readme.md)",
+      "value": ""
+    },
+    "title":{
+      "description": "网站标题",
+      "value": "TeambitionShare"
+      }
+   }
+}
