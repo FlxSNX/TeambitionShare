@@ -59,4 +59,4 @@ docker run -d -p 8081:80 malaohu/teambitionshare:latest
 ```
 
 ## Heroku一键部署
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
