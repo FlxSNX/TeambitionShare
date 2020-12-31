@@ -10,7 +10,7 @@
     },
     "url":{
       "description": "网站主页",
-      "value": "https://你的应用名称.herokuapp.com/"
+      "value": "https://你的应用名称.herokuapp.com"
     },
     "cookie":{
       "description": "网盘cookie(获取教程:https://github.com/FlxSNX/TeambitionShare/blob/master/readme.md)",
