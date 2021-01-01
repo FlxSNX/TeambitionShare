@@ -1,10 +1,15 @@
 <?php include template('common/head') ?>
 <div class="mdui-container">
 	<?php 
-		if($root != true){
+		if($dir['_parentId'] != NULL){
 	?>
-	<div class="mdui-list">
-		<a href="javascript:history.go(-1);" class="mdui-list-item mdui-ripple"><i class="mdui-icon material-icons">keyboard_backspace</i></a>
+	<div class="row">
+		<div class="mdui-col">
+			<div class="mdui-typo-subheading mdui-m-b-1 mdui-p-l-1 mdui-text-truncate">
+				<a href="<?=$_CFG['url']?>/<?=$dir['_parentId']?>" class="mdui-ripple"><i class="mdui-icon material-icons">arrow_back</i></a>
+				<i class="mdui-icon material-icons mdui-m-r-1">folder</i><?=$dir['title']?></div>
+    		<div class="mdui-divider mdui-m-b-2"></div>
+		</div>
 	</div>
 	<?php
 		}
@@ -52,6 +57,6 @@
 		?>
 	</div>
 	<div class="mdui-divider"></div>
-	<div class="bottom-text mdui-typo-body-1 mdui-text-center mdui-m-t-2">TeambitionShare v1.12 | Powered by <a href="https://github.com/FlxSNX/TeambitionShare">FlxSNX</a></div>
+	<div class="bottom-text mdui-typo-body-1 mdui-text-center mdui-m-t-2">TeambitionShare v<?=$version?> | Powered by <a href="https://github.com/FlxSNX/TeambitionShare">FlxSNX</a></div>
 </div>
 <?php include template('common/foot') ?>

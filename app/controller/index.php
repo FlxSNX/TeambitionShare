@@ -5,11 +5,11 @@ use app\controller\teambition\project;
 use app\controller\teambition\pan;
 class index{
     public function __init(){
+        $version = '1.13';
         global $Flx;
         $this->_CFG = $Flx->_CFG;
         $this->cookie = $this->_CFG['teambition']['cookie'];
-        $this->projectId = $this->_CFG['teambition']['projectId'];
-        assign(['_CFG' => $this->_CFG]);
+        assign(['_CFG' => $this->_CFG,'version' => $version]);
         // 全局密码
         if(isset($this->_CFG['password']) && $this->_CFG['password'] != false){
             session_start();
@@ -39,15 +39,13 @@ class index{
             if($this->_CFG['type'] == 'project'){
                 $project = new project($this->_CFG);
 
-                if(!$id){
-                    $id = $project->info['_rootCollectionId'];
-                    $root = true;
-                }
+                if(!$id)$id = $project->info['_rootCollectionId'];
 
                 $list = $project->get_list($id);
 
                 $dirlist = $list['dirs'];
                 $filelist = $list['files'];
+                $dir = $project->get_dir($id);
                 
                 // 查询是否有.password文件
                 $fileindex = 0;
@@ -69,7 +67,7 @@ class index{
                     'dirlist' => $dirlist,
                     'filelist' => $filelist,
                     'title' => $this->_CFG['title'],
-                    'root' => $root
+                    'dir' => $dir
                 ]);
                 
                 // 目录密码验证
@@ -94,12 +92,10 @@ class index{
                 }
             }elseif($this->_CFG['type'] == 'pan'){
                 $pan = new pan($this->_CFG);
-                if(!$id){
-                    $id = $this->_CFG['pan']['rootId'];
-                    $root = true;
-                }
+                if(!$id)$id = $this->_CFG['pan']['rootId'];
 
                 $list = $pan->get_list($id);
+                $dir = $pan->get_dir($id);
                  
                 // 查询是否有.password文件
                 $fileindex = 0;
@@ -120,7 +116,7 @@ class index{
                 assign([
                     'panlist' => $list,
                     'title' => $this->_CFG['title'],
-                    'root' => $root
+                    'dir' => $dir
                 ]);
                 
                 // 目录密码验证

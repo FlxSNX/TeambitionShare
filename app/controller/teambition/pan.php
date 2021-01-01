@@ -31,4 +31,13 @@ class pan{
             return $result;
         }
     }
+
+    public function get_dir($id){
+        $result = teambition::get_pan_file($this->_CFG['pan']['cookie'],$this->_CFG['pan']['orgId'],$this->_CFG['pan']['spaceId'],$this->_CFG['pan']['driveId'],$id);
+        if($result['status'] != '400'){
+            return $result;
+        }else{
+            return app_error(404);
+        }
+    }
 }

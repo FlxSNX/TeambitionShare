@@ -51,4 +51,13 @@ class project{
         if($result['message'])return app_error(404);
         return $result;
     }
+
+    public function get_dir($id){
+        $result = teambition::get_dir($id,$this->cookie);
+        if($result){
+            return $result;
+        }else{
+            return app_error(404);
+        }
+    }
 }
