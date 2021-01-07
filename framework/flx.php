@@ -1,7 +1,7 @@
 <?php
 /**
  * FlxPHP
- * Author:FlxSNX<211154860@qq.com>
+ * Author:拾年<211154860@qq.com>
  * [框架核心文件]
  */
 namespace FlxPHP;
@@ -23,10 +23,15 @@ class Flx{
         if(file_exists(APPDIR.'function.php'))include APPDIR.'function.php';
 
         //加载配置
-        $this->loadcfg();
+        $this->loadCfg();
+
+        //加载路由
+        include_once SYSTEMDIR.'route.php';
+        include_once APPDIR.'route.php';
 
         //处理请求
-        $this->request();
+        $response = $this->request();
+        echo $response;
     }
 
     private function base(){
@@ -55,10 +60,10 @@ class Flx{
         define('ASSETSDIR', dirname(__DIR__). '/public/');
 
         //框架版本
-        define('FLXPHP_VER','3.0');
+        define('FLXPHP_VER','3.1');
 
         //框架内部版本号
-        define('FLXPHP_BUILD','3001');
+        define('FLXPHP_BUILD','3100');
         
         //应用URL
         define('APPURL',((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://'). $_SERVER['HTTP_HOST']);
@@ -72,6 +77,8 @@ class Flx{
         spl_autoload_register(function($classname){
             if(substr($classname,0,3) == 'app'){
                 $classname = substr($classname,4);
+            }elseif(substr($classname,0,6) == 'FlxPHP'){
+                $classname = substr($classname,7);
             }
             $classname = str_replace("\\","/",$classname);
             include_once $classname . '.php';
@@ -87,97 +94,100 @@ class Flx{
         if($s != '/' and substr($s,-1) == '/'){
             $s = substr($s,0,-1);
         }
-        
-        $this->_SYS['route'] = get_route();
-        
-        if(!$this->_SYS['route'])sys_error(['error' => '应用未设置路由','info' => '请在应用的route目录下设置路由']);
 
-        /* 下个版本路由模块将加入请求类型的区分 */
-            
-         //解析路由
-         $i = 0;
-         foreach ($this->_SYS['route'] as $k => $v){
-             if(!preg_match('/{(.+)}/',$k)){
-                 $routes[$i]['type'] = 1;
-             }else{
-                 $routes[$i]['type'] = 2;
-             }
-             $routes[$i]['param'] = $k;
-             $routes[$i]['method'] = $v;
-             $i++;
-         }
-     
-         //匹配路由
-         foreach($routes as $route){
-             if($route['type'] == 2){
-                 //转义+去除{}
-                 $route['param'] = str_replace('/','\\/',$route['param']);
-                 $route['param'] = str_replace('{','(',$route['param']);
-                 $route['param'] = str_replace('}',')',$route['param']);
-                 $pattern = '/^'.$route['param'].'$/';
-                 if(preg_match($pattern,$s,$val)){//匹配成功执行方法(method)
-                     //解析method
-                     $route['method'] = explode('@',$route['method']);
-                     $this->_SYS['controller'] = $route['method'][0];
-                     $this->_SYS['action'] = $route['method'][1];
-                     //检查controller对应的文件是否存在
-                     if(!file_exists(APPDIR.'controller/'.$this->_SYS['controller'].'.php')){
-                        sys_error([
-                            'error' => '未找到'.$this->_SYS['controller'].'控制器',
-                            'info' => '在'.APPDIR.'controller目录未找到'.$this->_SYS['controller'].'.php文件'
-                        ]);
-                     }
-                     //实例化类并执行对应的类方法
-                     $run_class_name = 'app\\controller\\'. $this->_SYS['controller'];
-                     $run_action = $this->_SYS['action'];
-                     $run = new $run_class_name;
-                     if(method_exists($run,$run_action)) {//检查是否存在对应的方法
-                        //检查是否存在__init方法 用于防止子类重写父类的__construct方法
-                        if(method_exists($run,'__init'))$run->__init();
-                        $run->$run_action(...$val);
+        $this->_SYS['route'] = Route::$instance->route;
+
+        if(!$this->_SYS['route'])sys_error(['error' => '应用未设置路由']);
+
+        $method = get_method();
+
+        if($method == 'get'){
+            $routes = $this->_SYS['route']['get'];
+        }elseif($method == 'post'){
+            $routes = $this->_SYS['route']['post'];
+        }else{
+            if(!$this->_SYS['route'])sys_error(['error' => '非法的请求方式']);
+        }
+        
+        foreach($routes as $k => $v){
+            if($v['type'] == 'regex'){
+                preg_match_all('/{([^\/]+)}/',$k,$regexResult);
+                if(!$regexResult)sys_error(['error' => '路由规则出错:'.$k]);
+                $rule = str_replace('/','\\/',$k);
+                $rule = '/^'.$rule.'$/';
+
+                $names = $regexResult[1];
+                foreach($names as $name){
+                    if($v['regex'][$name]){
+                        $rule = str_replace('{'.$name.'}','('.$v['regex'][$name].')',$rule);
+                    }else{
+                        $rule = str_replace('{'.$name.'}','([^\/]+)',$rule);
+                    }
+                }
+                if(preg_match($rule,$s,$val)){
+                    $val[count($val)] = $val[0];
+                    unset($val[0]);
+                    if($v['method'] instanceof \Closure){
+                        $run = $v['method'];
+                        return $run(...$val);
+                    }else{
+                        $v['method'] = explode('@',$v['method']);
+                        $this->_SYS['controller'] = $v['method'][0];
+                        $this->_SYS['action'] = $v['method'][1];
+                        $this->_SYS['routeVal'] = $val;
+                        $this->_SYS['s'] = $s;
                         break;
-                     }else{
-                        sys_error([
-                            'error' => $this->_SYS['controller'].'控制器缺少'.$this->_SYS['action'].'方法',
-                            'info' => '在'.APPDIR.'controller/'.$this->_SYS['controller'].'.php未找到'.$this->_SYS['action'].'方法'
-                        ]);
-                     }
-                 }
-             }else{
-                 if($s == $route['param']){
-                     //解析method
-                     $route['method'] = explode('@',$route['method']);
-                     $this->_SYS['controller'] = $route['method'][0];
-                     $this->_SYS['action'] = $route['method'][1];
-                     //检查controller对应的文件是否存在
-                     if(!file_exists(APPDIR.'controller/'.$this->_SYS['controller'].'.php')){
-                        sys_error([
-                            'error' => '未找到'.$this->_SYS['controller'].'控制器',
-                            'info' => '在'.APPDIR.'controller目录未找到'.$this->_SYS['controller'].'.php文件'
-                        ]);
-                     }
-                     //实例化类并执行对应的类方法
-                     $run_class_name = 'app\\controller\\'. $this->_SYS['controller'];
-                     $run_action = $this->_SYS['action'];
-                     $run = new $run_class_name;
-                     if(method_exists($run,$run_action)) {//检查是否存在对应的方法
-                        //检查是否存在__init方法 用于防止子类重写父类的__construct方法
-                        if(method_exists($run,'__init'))$run->__init();
-                        $run->$run_action($route['param']);
+                    }
+                }
+            }else{
+                if($s == $k){
+                    if($v['method'] instanceof \Closure){
+                        $run = $v['method'];
+                        return $run();
+                    }else{
+                        $v['method'] = explode('@',$v['method']);
+                        $this->_SYS['controller'] = $v['method'][0];
+                        $this->_SYS['action'] = $v['method'][1];
+                        $this->_SYS['routeVal'] = false;
+                        $this->_SYS['s'] = $s;
                         break;
-                     }else{
-                        sys_error([
-                            'error' => $this->_SYS['controller'].'控制器缺少'.$this->_SYS['action'].'方法',
-                            'info' => '在'.APPDIR.'controller/'.$this->_SYS['controller'].'.php未找到'.$this->_SYS['action'].'方法'
-                        ]);
-                     }
-                 }
-             }
-         }
-         if(!$run)sys_error(['error' => '未匹配到路由','info' => '系统未找到与请求相对应的路由']);
+                    }
+                }
+            }
+        }
+
+        if($this->_SYS['controller'] && $this->_SYS['action']){
+            //检查controller对应的文件是否存在
+            if(!file_exists(APPDIR.'controller/'.$this->_SYS['controller'].'.php')){
+                sys_error([
+                    'error' => '未找到'.$this->_SYS['controller'].'控制器',
+                    'info' => '在'.APPDIR.'controller目录未找到'.$this->_SYS['controller'].'.php文件'
+                ]);
+            }
+            //实例化类并执行对应的类方法
+            $run_class_name = 'app\\controller\\'. $this->_SYS['controller'];
+            $run_action = $this->_SYS['action'];
+            $run = new $run_class_name;
+            if(method_exists($run,$run_action)) {//检查是否存在对应的方法
+                //检查是否存在__init方法 用于防止子类重写父类的__construct方法
+                if(method_exists($run,'__init'))$run->__init();
+                if($this->_SYS['routeVal']){
+                    return $run->$run_action(...$this->_SYS['routeVal']);
+                }else{
+                    return $run->$run_action();
+                }  
+            }else{
+                sys_error([
+                    'error' => $this->_SYS['controller'].'控制器缺少'.$this->_SYS['action'].'方法',
+                    'info' => '在'.APPDIR.'controller/'.$this->_SYS['controller'].'.php未找到'.$this->_SYS['action'].'方法'
+                ]);
+            }
+        }else{
+            sys_error(['error' => '未匹配到路由']);
+        }
     }
 
-    private function loadcfg(){
+    private function loadCfg(){
         $this->_CFG = [];
         //获取系统配置
         $this->_CFG = get_cfg(ROOTDIR . 'config/');

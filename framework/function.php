@@ -1,7 +1,7 @@
 <?php
 /**
  * FlxPHP
- * Author:FlxSNX<211154860@qq.com>
+ * Author:拾年<211154860@qq.com>
  * [框架函数]
  */
 
@@ -97,33 +97,6 @@ function get_cfg($path)
 }
 
 /**
- * 获取指定目录所有路由文件
- */
-function get_route($path=APPDIR.'route/')
-{
-    if (!file_exists($path)) {
-        sys_error([
-            'error' => '加载路由文件失败',
-            'info' => '请检查是否文件夹或文件是否存在'
-        ]);
-    }
-    $route = [];
-    chdir($path);
-    $routes = glob('*.php');
-    if ($routes) {
-        foreach ($routes as $r) {
-            $content = include($path . $r);
-            if (is_array($content)) {
-                $route = array_merge($content, $route);
-            }
-        }
-        return $route;
-    } else {
-        return [];
-    }
-}
-
-/**
  * 将变量传入模板中
  */
 function assign($name, $value = '')
@@ -196,4 +169,16 @@ function authstr($string, $force = 0, $strip = FALSE)
         $string = addslashes($strip ? stripslashes($string) : $string);
     }
     return $string;
+}
+
+
+function get_method(){
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if($method){
+        $method = strtolower($method);
+        return $method;
+    }else{
+        return false;
+    }
 }

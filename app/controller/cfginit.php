@@ -72,7 +72,8 @@ TEXT;
                 }
             }
             assign([
-                'title' => '配置向导'
+                'title' => '配置向导',
+                'version' => '1.14'
             ]);
             view('cfginit');
         }else{

@@ -1,7 +1,7 @@
 <?php
 /**
  * Teambition操作类
- * @author FlxSNX<211154860@qq.com>
+ * @author 拾年<211154860@qq.com>
  * @version 1.1
  */
 

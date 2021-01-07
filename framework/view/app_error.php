@@ -1,7 +1,7 @@
 <?php
 /**
  * FlxPHP
- * Author:FlxSNX<211154860@qq.com>
+ * Author:拾年<211154860@qq.com>
  * [应用错误提示页模板]
  */
 ?>
@@ -36,13 +36,6 @@
             margin-top: -150px; 
         }
 
-        p.title{
-            text-align: center;
-            font-size: 20px;
-            font-weight: 100;
-            color: #333;
-        }
-
         p.errorMsg{
             font-size: 16px;
         }
@@ -53,13 +46,27 @@
             font-weight: 100;
             padding: 5px;
         }
+
+        p.errorcode{
+            font-size: 36px;
+            color: #333;
+        }
+
+        .reback{
+            text-decoration: none;
+            font-size: 12px;
+            color: initial;
+        }
     </style>
 </head>
 <body>
     <div class="error">
-        <p class="title">Error Code:<?=$error['code']?></p>
-        <p class="errorMsg">-><?=$error['error']?><-</p>
-        <p class="info">[<?=$error['info']?>]</p>
+        <p class="errorcode"><?=$error['code']?></p>
+        <p class="errorMsg"><?=$error['error']?></p>
+        <?php if($error['info']){ ?>
+        <p class="info"><?=$error['info']?></p>
+        <?php } ?>
+        <p><a class="reback" href="javascript:history.back(-1)">返回上一页</a></p>
     </div>
 </body>
 </html>

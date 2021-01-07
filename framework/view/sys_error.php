@@ -1,7 +1,7 @@
 <?php
 /**
  * FlxPHP
- * Author:FlxSNX<211154860@qq.com>
+ * Author:拾年<211154860@qq.com>
  * [系统错误提示页模板]
  */
 ?>
@@ -37,9 +37,7 @@
         }
 
         p.title{
-            text-align: center;
-            font-size: 20px;
-            font-weight: 100;
+            font-size: 36px;
             color: #333;
         }
 
@@ -53,15 +51,24 @@
             font-weight: 100;
             padding: 5px;
         }
+
+        .reback{
+            text-decoration: none;
+            font-size: 12px;
+            color: initial;
+        }
     </style>
 </head>
 <body>
     <div class="error">
-        <p class="title">FlxPHP - SysetmError</p>
-        <p class="errorMsg">-><?=$error['error']?><-</p>
+        <p class="title">SysetmError</p>
+        <p class="errorMsg"><?=$error['error']?></p>
+        <?php if($error['info']){ ?>
         <p class="info">[<?=$error['info']?>]</p>
-        <p class="errorin">ErrorIN-><br><?=$error['file']?>#<?=$error['line']?></p>
+        <?php } ?>
+        <p class="errorin">ErrorIN-><?=$error['file']?>#<?=$error['line']?></p>
         <p class="ver">FlxPHP V<?=FLXPHP_VER?> build<?=FLXPHP_BUILD?></p>
+        <p><a class="reback" href="javascript:history.back(-1)">返回上一页</a></p>
     </div>
 </body>
 </html>

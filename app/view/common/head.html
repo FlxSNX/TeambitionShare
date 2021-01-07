@@ -100,19 +100,26 @@
 		width: 48px;
 		height: 48px;
 	}
-
-	.bottom-text a{
-		color: #000;
+	
+	footer{
+		position: relative;
+		bottom: 20px;
+		width: 100%;
 	}
 
-	.mdui-theme-layout-dark .bottom-text a{
+	footer a{
+		color: #000;
+		text-decoration: none;
+	}
+
+	.mdui-theme-layout-dark footer a{
 		color: #fff;
 	}
 </style>
 <body>
 <div class="loading" id="loading"><div class="mdui-spinner"></div></div>
 <div class="header mdui-shadow-0">
-	<div class="mdui-p-x-2 mdui-p-y-0 mdui-center mdui-col-md-8" style="float: none;">
+	<div class="mdui-container" style="padding: 0 14px;">
 		<a href="<?=$_CFG['url']?>" style="text-decoration: none;"><span class="mdui-typo-title"><i class="mdui-icon material-icons">cloud_circle</i> <?=$title?></span></a>
 		<div class="right-icon mdui-float-right">
 			<button class="mdui-btn mdui-btn-icon" id="theme-toggle"><i class="mdui-icon material-icons">brightness_4</i></button>

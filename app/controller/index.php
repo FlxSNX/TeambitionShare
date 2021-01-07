@@ -5,7 +5,7 @@ use app\controller\teambition\project;
 use app\controller\teambition\pan;
 class index{
     public function __init(){
-        $version = '1.13';
+        $version = '1.14';
         global $Flx;
         $this->_CFG = $Flx->_CFG;
         $this->cookie = $this->_CFG['teambition']['cookie'];
@@ -32,7 +32,7 @@ class index{
         }
     }
 
-    public function index($url,$id=false){
+    public function index($id=false){
         if(!$this->_CFG['teambition'] && !$this->_CFG['pan']){
             header('Location:init');
         }else{
@@ -150,7 +150,7 @@ class index{
         }
     }
 
-    public function getDownload($url,$id){
+    public function getDownload($id){
         $type = authstr($_GET['type']) ?: 302;
         if($this->_CFG['type'] == 'project'){
             $result = teambition::get_download_url($id,$this->cookie);

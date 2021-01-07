@@ -1,12 +1,17 @@
+<footer class="mdui-typo-body-1 mdui-text-center">
+    <a href="https://github.com/FlxSNX/TeambitionShare">TeambitionShare v<?=$version?></a> | Powered by <a href="https://github.com/FlxSNX">FlxSNX</a>
+</footer>
 <script src="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.1/js/mdui.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
-    $(function(){
-        if(localStorage.getItem('dark') == 'true'){
-            $('body').addClass('mdui-theme-layout-dark');
-            $('#theme-toggle i').text('brightness_5');
-        }
-        $('#theme-toggle').click(function(){
+$(function(){
+    footer_bottom();
+    if(localStorage.getItem('dark') == 'true'){
+        $('body').addClass('mdui-theme-layout-dark');
+        $('#theme-toggle i').text('brightness_5');
+    }
+
+    $('#theme-toggle').click(function(){
         if($('body').hasClass('mdui-theme-layout-dark')){
             $('body').removeClass('mdui-theme-layout-dark');
             $('#theme-toggle i').text('brightness_4');
@@ -17,7 +22,20 @@
             localStorage.setItem('dark',true);
         }
     });
-    });
+
+    $(window).resize(function(){
+        footer_bottom();
+    })
+
+});
+function footer_bottom(){
+    console.log($(window).height() - $('body').height(),-(42 - $('footer').height()))
+    if(($(window).height() - $('body').height()) > -25){
+        $('footer').css({'position':'fixed'})
+    }else{
+        $('footer').css({'position':'relative'})
+    }
+}
 </script>
 </body>
 </html>
