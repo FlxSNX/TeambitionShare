@@ -69,3 +69,6 @@ docker pull flxsnx/teambitionshare
 docker run -d -p 8081:80 flxsnx/teambitionshare:latest
 # 访问: http://ip:8081
 ```
+
+## Heroku一键部署
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
