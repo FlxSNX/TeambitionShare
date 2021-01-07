@@ -65,7 +65,7 @@ location /pan {
 
 ## Docker
 ```
-docker pull malaohu/teambitionshare
-docker run -d -p 8081:80 malaohu/teambitionshare:latest
+docker pull flxsnx/teambitionshare
+docker run -d -p 8081:80 flxsnx/teambitionshare:latest
 # 访问: http://ip:8081
 ```
