@@ -38,13 +38,13 @@ F12 -> Network -> 刷新一下 找到如图所示的cookie
 
 ### Nginx
 ```
-#根目录伪静态
+# 根目录伪静态
 location / {
   if (!-e $request_filename){
     rewrite ^(.*)$ /index.php/?s=$1;
   }
 }
-#二级目录伪静态，自行修改pan为你的二级目录名字
+# 二级目录伪静态，自行修改pan为你的二级目录名字
 location /pan {
   if (!-e $request_filename){
     rewrite ^/pan/(.*)$ /pan/index.php/?s=$1;
