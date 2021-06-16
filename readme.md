@@ -3,11 +3,13 @@
 ## 说明
 **暂时不会进行更新 目前可正常使用 支持阿里网盘也鸽了~~~**  
 已支持Teambition网盘(需申请)与Teambition项目  
+**本项目仅供学习交流使用,请勿用于非法用途,否则造成的一切后果由使用者自行承担,作者不承担任何法律责任!**  
 **希望各位修改页面底部信息时保留本项目的github链接！**  
 **如果升级版本时出现报错 请删除 config/app.cfg.php 然后在配置向导中重新生成配置**  
   
 PHP版本要求 ≥ 5.6  
 PHP版本推荐 ≥ 7.0   
+演示站已关闭  
 ~~项目挂载演示站点:[tbfile.ouoacg.com](http://tbfile.ouoacg.com)~~  
 ~~网盘挂载演示站点:[tbfile.ouoacg.com/pan](http://tbfile.ouoacg.com/pan) 访问密码:123456~~  
 ## 一些问题
