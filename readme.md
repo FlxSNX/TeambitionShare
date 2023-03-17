@@ -9,9 +9,6 @@
   
 PHP版本要求 ≥ 5.6  
 PHP版本推荐 ≥ 7.0   
-演示站已关闭  
-~~项目挂载演示站点:[tbfile.ouoacg.com](http://tbfile.ouoacg.com)~~  
-~~网盘挂载演示站点:[tbfile.ouoacg.com/pan](http://tbfile.ouoacg.com/pan) 访问密码:123456~~  
 ## 一些问题
 1.Cookie有效期  
 目前未遇到cookie失效的情况,猜测只要你不在官网手动退出登录就不会失效  
